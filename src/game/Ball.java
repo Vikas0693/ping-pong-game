@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -171,8 +173,24 @@ public class Ball implements Runnable{
 	void sound()
 	{
 		 try {
-		        audioInputStream = AudioSystem.getAudioInputStream(new File("F:/Eclipse Programs/Eclipse/PongGame/src/modified.wav").getAbsoluteFile());
-		        clip = AudioSystem.getClip();
+			 final String fileName ="modified.wav";
+			 URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
+			 String path=url.getPath();
+			 //when running in jar path will contain '!'
+			 if(path.contains("!")) {
+				 File currentPath= new File(".");
+				 //System.out.println("current path = "+currentPath.getCanonicalPath());
+				 audioInputStream = AudioSystem.getAudioInputStream(new File(currentPath.getCanonicalFile()+"/modified.wav"));
+			 }
+			 else {
+				 //when running in eclipse
+				 //System.out.println("parent = "+this.getClass().getClassLoader().getResource("").getPath());
+				 //System.out.println("parent1 = "+this.getClass().getResource("").getPath());
+				 path = this.getClass().getClassLoader().getResource(fileName).getPath();
+				 System.out.println("path = "+path);
+				 audioInputStream = AudioSystem.getAudioInputStream(new File(path));
+			 }
+			 	clip = AudioSystem.getClip();
 		        clip.open(audioInputStream);
 		        clip.start();
 		    } catch(Exception ex) {
