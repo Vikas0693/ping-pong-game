@@ -37,7 +37,7 @@ class Pong extends JFrame implements KeyListener,MouseListener,ActionListener//,
 	Image i;
 	Graphics dg;
 	Ball b;
-	public Rectangle boundary;
+	public Rectangle boundary=new Rectangle(10,30,580,560);
 	boolean spacePressed=false;
 	//Rectangle start;
 	//Rectangle quit;
@@ -67,7 +67,7 @@ class Pong extends JFrame implements KeyListener,MouseListener,ActionListener//,
 		setTitle("PING PONG");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
-		boundary=new Rectangle(10,30,580,560);
+		
 		addKeyListener(this);
 		
 		//FontMetrics fm=space.getFontMetrics();
